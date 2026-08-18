@@ -1,0 +1,2 @@
+rootProject.name = 'docflow-platform'
+include 'notification-service', 'order-service', 'user-service'
