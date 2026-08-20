@@ -1,0 +1,85 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: iana
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: notifications
+      changes:
+        - createTable:
+            tableName: notifications
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: 'PENDING'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: retry_count
+                  type: BIGINT
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: error_message
+                  type: VARCHAR(250)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sent_at
+                  type: TIMESTAMP
+
+        - sql:
+            dbms: 'postgresql'
+            sql: ALTER TABLE notifications ADD CONSTRAINT chk_notification_type CHECK (type IN ('EMAIL', 'IN_APP'))
+            rollback:
+              - sql:
+                  sql: ALTER TABLE notifications DROP CONSTRAINT chk_notification_type
+        - sql:
+            dbms: 'postgresql'
+            sql: ALTER TABLE notifications ADD CONSTRAINT chk_notification_status CHECK (status IN ('PENDING', 'SENT','FAILED'))
+            rollback:
+              - sql:
+                  sql: ALTER TABLE notifications DROP CONSTRAINT chk_notification_status
+
+        - createIndex:
+            indexName: idx_notifications_user_id
+            tableName: notifications
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            indexName: idx_notifications_status
+            tableName: notifications
+            columns:
+              - column:
+                  name: status

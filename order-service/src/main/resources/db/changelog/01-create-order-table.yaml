@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: iana
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: orders
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+              - column:
+                  name: status
+                  type: VARCHAR(30)
+                  defaultValue: NEW
+                  constraints:
+                    nullable: false
+              - column:
+                  name: priority
+                  type: VARCHAR(20)
+                  defaultValue: LOW
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assignee_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resolved_at
+                  type: TIMESTAMP
+              - column:
+                  name: rejection_reason
+                  type: VARCHAR(250)
+
+        - sql:
+            dbms: 'postgresql'
+            sql: ALTER TABLE orders ADD CONSTRAINT chk_order_status CHECK (status IN ('NEW', 'IN_PROGRESS', 'DONE', 'REJECTED'))
+            rollback:
+              - sql:
+                  sql: ALTER TABLE orders DROP CONSTRAINT chk_order_status
+
+        - sql:
+            dbms: 'postgresql'
+            sql: ALTER TABLE orders ADD CONSTRAINT chk_order_priority CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH', 'URGENT'))
+            rollback:
+              - sql:
+                  sql: ALTER TABLE orders DROP CONSTRAINT chk_order_priority
+
+        - createIndex:
+            indexName: idx_orders_user_id
+            tableName: orders
+            columns:
+              - column:
+                  name: user_id
+        - createIndex:
+            indexName: idx_orders_assignee_id
+            tableName: orders
+            columns:
+              - column:
+                  name: assignee_id
+        - createIndex:
+            indexName: idx_orders_status
+            tableName: orders
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            indexName: idx_orders_created_at
+            tableName: orders
+            columns:
+              - column:
+                  name: created_at

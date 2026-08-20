@@ -1,7 +1,6 @@
 description = 'notification-service'
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 

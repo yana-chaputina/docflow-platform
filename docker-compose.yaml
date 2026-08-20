@@ -1,0 +1,63 @@
+services:
+  postgres-user:
+    image: 'postgres:18.6-alpine'
+    environment:
+      POSTGRES_DB: userdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: usersecret
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_user_data:/var/lib/postgresql/18/data
+    networks:
+      - app-network
+
+  postgres-order:
+    image: 'postgres:18.6-alpine'
+    environment:
+      POSTGRES_DB: orderdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: usersecret
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_order_data:/var/lib/postgresql/18/data
+    networks:
+      - app-network
+
+  postgres-notification:
+    image: 'postgres:18.6-alpine'
+    environment:
+      POSTGRES_DB: notificationdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: usersecret
+    ports:
+      - '5434:5432'
+    volumes:
+      - postgres_notification_data:/var/lib/postgresql/18/data
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_gui
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres-user
+      - postgres-order
+      - postgres-notification
+    networks:
+      - app-network
+
+volumes:
+  postgres_user_data:
+  postgres_order_data:
+  postgres_notification_data:
+
+networks:
+  app-network:
+    driver: bridge
