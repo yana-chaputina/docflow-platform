@@ -1,4 +1,4 @@
-package com.ipr.userservice.entity;
+package com.ipr.orderservice.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,30 +9,29 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="refresh_tokens")
+@Table(name="status_history")
 @Getter
 @Setter
 @NoArgsConstructor
-public class RefreshToken {
+public class StatusHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
-    @Column(nullable = false, unique = true)
-    private String token;
+    private String oldStatus;
 
     @Column(nullable = false)
-    private LocalDateTime expiresAt;
+    private String newStatus;
+
+    @Column(nullable = false)
+    private Long changedBy;
 
     @Column(nullable = false)
     @CreationTimestamp
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private Boolean revoked;
+    private LocalDateTime changedAt;
 
 }
