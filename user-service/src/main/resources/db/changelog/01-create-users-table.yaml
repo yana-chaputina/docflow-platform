@@ -20,29 +20,35 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: first_name
-                  type: varchar(250)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
                   name: last_name
-                  type: varchar(250)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
                   name: email
-                  type: varchar(250)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
                     unique: true
               - column:
                   name: password_hash
-                  type: varchar(250)
+                  type: VARCHAR(255)
                   constraints:
                     nullable: false
               - column:
                   name: status
-                  type: varchar(250)
+                  type: VARCHAR(20)
                   defaultValue: ACTIVE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(20)
+                  defaultValue: USER
                   constraints:
                     nullable: false
 
@@ -52,6 +58,12 @@ databaseChangeLog:
             rollback:
               - sql:
                   sql: ALTER TABLE users DROP CONSTRAINT chk_users_status
+        - sql:
+            dbms: 'postgresql'
+            sql: ALTER TABLE users ADD CONSTRAINT chk_users_role CHECK (role IN ('USER', 'MANAGER', 'ADMIN'))
+            rollback:
+              - sql:
+                  sql: ALTER TABLE users DROP CONSTRAINT chk_users_role
 
         - createIndex:
             indexName: idx_users_email
