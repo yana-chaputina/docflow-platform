@@ -52,4 +52,8 @@ public class UserService {
                 .updateUserRequestDtoToUser(updateUserRequestDto,user));
         return userDTOEntityMapper.userToUserResponseDto(user);
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

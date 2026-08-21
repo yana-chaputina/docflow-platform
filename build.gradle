@@ -26,6 +26,7 @@ subprojects {
 
     dependencies {
         implementation("org.springframework.security:spring-security-crypto:6.4.2") //заменить на секьюрити
+        implementation 'org.springframework.boot:spring-boot-starter-validation:4.1.0'
         implementation 'org.mapstruct:mapstruct:1.6.3'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-liquibase'

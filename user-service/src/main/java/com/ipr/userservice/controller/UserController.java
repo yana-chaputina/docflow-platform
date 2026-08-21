@@ -4,7 +4,12 @@ import com.ipr.userservice.dto.CreateUserRequestDto;
 import com.ipr.userservice.dto.UpdateUserRequestDto;
 import com.ipr.userservice.dto.UserResponseDto;
 import com.ipr.userservice.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,18 +27,33 @@ public class UserController {
 
 
     @GetMapping
-    public List<UserResponseDto> getUsers(){
-        return userService.getUsers();
+    public ResponseEntity<List<UserResponseDto>> getUsers(){
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @PostMapping
-    public UserResponseDto createUser(@RequestBody CreateUserRequestDto createUserRequestDto){
-        return userService.createUser(createUserRequestDto);
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody CreateUserRequestDto createUserRequestDto,
+                                      BindingResult result){
+        if(result.hasErrors()){
+            throw new ValidationException(result.getAllErrors().getFirst().getDefaultMessage());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(userService.createUser(createUserRequestDto));
     }
 
-    @PostMapping("/{id}")
-    public UserResponseDto updateUser(@RequestBody UpdateUserRequestDto updateUserRequestDto,
-                                      @PathVariable Long id){
-        return userService.updateUser(updateUserRequestDto,id);
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUserById(@Valid @RequestBody UpdateUserRequestDto updateUserRequestDto,
+                                      @PathVariable Long id,
+                                      BindingResult result){
+        if(result.hasErrors()){
+            throw new ValidationException(result.getAllErrors().getFirst().getDefaultMessage());
+        }
+        return ResponseEntity.ok(userService.updateUser(updateUserRequestDto,id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
