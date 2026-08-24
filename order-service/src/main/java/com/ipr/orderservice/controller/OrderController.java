@@ -1,7 +1,9 @@
 package com.ipr.orderservice.controller;
 
 import com.ipr.orderservice.dto.OrderDto;
+import com.ipr.orderservice.dto.StatusHistoryDto;
 import com.ipr.orderservice.service.OrderService;
+import com.ipr.orderservice.service.StatusHistoryService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +18,22 @@ import java.util.Objects;
 @RequestMapping("/api/v1/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final StatusHistoryService statusHistoryService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, StatusHistoryService statusHistoryService) {
         this.orderService = orderService;
+        this.statusHistoryService = statusHistoryService;
     }
 
     @GetMapping
     public ResponseEntity<List<OrderDto>> getOrders(){
         return ResponseEntity.ok(orderService.getOrders());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDto> getOrderById (@PathVariable Long id){
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @PostMapping
@@ -40,5 +49,10 @@ public class OrderController {
     public ResponseEntity<OrderDto> deleteOrder(@PathVariable Long id){
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/status-history")
+    public ResponseEntity<List<StatusHistoryDto>> getStatusHistoryByOrderId(@PathVariable Long id) {
+        return ResponseEntity.ok(statusHistoryService.getStatusHistoryByOrderId(id));
     }
 }
