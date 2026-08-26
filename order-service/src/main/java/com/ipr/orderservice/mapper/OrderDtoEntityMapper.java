@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface OrderDTOEntityMapper {
+public interface OrderDtoEntityMapper {
 
     Order orderDtoToOrder(OrderDto orderDto);
 

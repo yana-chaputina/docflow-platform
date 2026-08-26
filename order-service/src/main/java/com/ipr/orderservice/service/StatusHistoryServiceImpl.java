@@ -2,7 +2,7 @@ package com.ipr.orderservice.service;
 
 import com.ipr.orderservice.dto.StatusHistoryDto;
 import com.ipr.orderservice.entity.StatusHistoryEntity;
-import com.ipr.orderservice.mapper.StatusHistoryDTOEntityMapper;
+import com.ipr.orderservice.mapper.StatusHistoryDtoEntityMapper;
 import com.ipr.orderservice.repository.StatusHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class StatusHistoryServiceImpl implements StatusHistoryService{
     private final StatusHistoryRepository statusHistoryRepository;
-    private final StatusHistoryDTOEntityMapper statusHistoryDTOEntityMapper;
+    private final StatusHistoryDtoEntityMapper statusHistoryDTOEntityMapper;
 
     @Autowired
-    public StatusHistoryServiceImpl(StatusHistoryRepository statusHistoryRepository, StatusHistoryDTOEntityMapper statusHistoryDTOEntityMapper) {
+    public StatusHistoryServiceImpl(StatusHistoryRepository statusHistoryRepository, StatusHistoryDtoEntityMapper statusHistoryDTOEntityMapper) {
         this.statusHistoryRepository = statusHistoryRepository;
         this.statusHistoryDTOEntityMapper = statusHistoryDTOEntityMapper;
     }

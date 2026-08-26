@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface StatusHistoryDTOEntityMapper {
+public interface StatusHistoryDtoEntityMapper {
 
     StatusHistoryEntity statusHistoryDtoToStatusHistoryEntity(StatusHistoryDto statusHistoryDto);
 
