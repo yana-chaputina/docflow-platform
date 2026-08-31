@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4
+      author: iana
+      changes:
+        # История для заявки 1 (order_id = 1): NEW → IN_PROGRESS
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 1 }
+              - column: { name: old_status, value: null }
+              - column: { name: new_status, value: "NEW" }
+              - column: { name: changed_by, value: 1 }
+              - column: { name: changed_at, value: "2026-08-01T09:15:00" }
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 1 }
+              - column: { name: old_status, value: "NEW" }
+              - column: { name: new_status, value: "IN_PROGRESS" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-02T10:30:00" }
+
+        # История для заявки 2 (order_id = 2): NEW → IN_PROGRESS → DONE
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 2 }
+              - column: { name: old_status, value: null }
+              - column: { name: new_status, value: "NEW" }
+              - column: { name: changed_by, value: 1 }
+              - column: { name: changed_at, value: "2026-08-03T13:20:00" }
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 2 }
+              - column: { name: old_status, value: "NEW" }
+              - column: { name: new_status, value: "IN_PROGRESS" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-04T09:00:00" }
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 2 }
+              - column: { name: old_status, value: "IN_PROGRESS" }
+              - column: { name: new_status, value: "DONE" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-10T15:30:00" }
+
+        # История для заявки 3 (order_id = 3): NEW → IN_PROGRESS → REJECTED
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 3 }
+              - column: { name: old_status, value: null }
+              - column: { name: new_status, value: "NEW" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-10T09:00:00" }
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 3 }
+              - column: { name: old_status, value: "NEW" }
+              - column: { name: new_status, value: "IN_PROGRESS" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-10T11:00:00" }
+        - insert:
+            tableName: status_history
+            columns:
+              - column: { name: order_id, value: 3 }
+              - column: { name: old_status, value: "IN_PROGRESS" }
+              - column: { name: new_status, value: "REJECTED" }
+              - column: { name: changed_by, value: 2 }
+              - column: { name: changed_at, value: "2026-08-12T11:20:00" }

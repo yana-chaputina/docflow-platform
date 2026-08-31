@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 3
+      author: iana
+      changes:
+        # Заявка 1: Новая, создана обычным пользователем (user_id = 1)
+        - insert:
+            tableName: orders
+            columns:
+              - column: { name: title, value: "Заявка на подключение нового клиента" }
+              - column: { name: description, value: "Подключить OOO Номер Один к системе документооборота" }
+              - column: { name: status, value: "NEW" }
+              - column: { name: priority, value: "HIGH" }
+              - column: { name: user_id, value: 1 }
+              - column: { name: assignee_id, value: null }
+
+        # Заявка 2: Выполнена (DONE)
+        - insert:
+            tableName: orders
+            columns:
+              - column: { name: title, value: "Регистрация нового юрлица в налоговой" }
+              - column: { name: description, value: "Подать документы на регистрацию ООО Номер Два" }
+              - column: { name: status, value: "DONE" }
+              - column: { name: priority, value: "HIGH" }
+              - column: { name: user_id, value: 1 }
+              - column: { name: assignee_id, value: 2 }
+              - column: { name: resolved_at, value: "2026-08-10T15:30:00" }
+
+        # Заявка 3: Отклонена (REJECTED)
+        - insert:
+            tableName: orders
+            columns:
+              - column: { name: title, value: "Заявка на расширение лимита по карте" }
+              - column: { name: description, value: "Увеличить кредитный лимит клиенту ООО Номер Три до 5 млн руб" }
+              - column: { name: status, value: "REJECTED" }
+              - column: { name: priority, value: "LOW" }
+              - column: { name: user_id, value: 3 }
+              - column: { name: assignee_id, value: 3 }
+              - column: { name: resolved_at, value: "2026-08-12T11:20:00" }
+              - column: { name: rejection_reason, value: "Недостаточная кредитная история клиента" }

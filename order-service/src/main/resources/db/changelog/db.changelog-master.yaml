@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/01-create-order-table.yaml
+  - include:
+      file: db/changelog/02-create-status_history-table.yaml
+  - include:
+      file: db/changelog/03-insert-data-orders-table.yaml
+  - include:
+      file: db/changelog/04-insert-data-status_history-table.yaml
+  - include:
+      file: db/changelog/05-create-export-tasks-table.yaml
