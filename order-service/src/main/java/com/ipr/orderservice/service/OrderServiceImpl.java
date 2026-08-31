@@ -13,11 +13,13 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDtoEntityMapper orderDTOEntityMapper;
+    private final OrderValidityChecker orderValidityChecker;
 
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, OrderDtoEntityMapper orderDTOEntityMapper) {
+    public OrderServiceImpl(OrderRepository orderRepository, OrderDtoEntityMapper orderDTOEntityMapper, OrderValidityChecker orderValidityChecker) {
         this.orderRepository = orderRepository;
         this.orderDTOEntityMapper = orderDTOEntityMapper;
+        this.orderValidityChecker = orderValidityChecker;
     }
 
     @Override
@@ -35,8 +37,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto createOrder(OrderDto orderDto) {
-        Order order = orderDTOEntityMapper.orderDtoToOrder(orderDto);
-        return orderDTOEntityMapper.orderToOrderDto(orderRepository.save(order));
+        if(orderValidityChecker.validateOrder(orderDto)) {
+            Order order = orderDTOEntityMapper.orderDtoToOrder(orderDto);
+            orderRepository.save(order);
+            return orderDTOEntityMapper.orderToOrderDto(order);
+        } else {
+            throw new RuntimeException("Order validation failed");
+        }
     }
 
     @Override
