@@ -3,16 +3,17 @@ databaseChangeLog:
       id: 5
       author: iana
       changes:
-        # Пароль: "password" (хеш BCrypt для 10 раундов)
-        # Для user@example.com: $2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EHsM8
-        # Для admin@example.com: $2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EHsM8
+        # Пароль: "password" (хеш BCrypt для 12 раундов)
+        # Для user@example.com: $2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G
+        # Для manager@example.com: $2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G
+        # Для admin@example.com: $2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G
         - insert:
             tableName: users
             columns:
               - column: { name: first_name, value: "Artem" }
               - column: { name: last_name, value: "S" }
               - column: { name: email, value: "user@example.com" }
-              - column: { name: password_hash, value: "$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EHsM8" }
+              - column: { name: password_hash, value: "$2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G" }
               - column: { name: status, value: "ACTIVE" }
               - column: { name: role, value: "USER" }
         - insert:
@@ -21,7 +22,7 @@ databaseChangeLog:
               - column: { name: first_name, value: "Stepan" }
               - column: { name: last_name, value: "R" }
               - column: { name: email, value: "manager@example.com" }
-              - column: { name: password_hash, value: "$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EHsM8" }
+              - column: { name: password_hash, value: "$2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G" }
               - column: { name: status, value: "ACTIVE" }
               - column: { name: role, value: "MANAGER" }
         - insert:
@@ -30,6 +31,6 @@ databaseChangeLog:
               - column: { name: first_name, value: "Iana" }
               - column: { name: last_name, value: "P" }
               - column: { name: email, value: "admin@example.com" }
-              - column: { name: password_hash, value: "$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iAt6Z5EHsM8" }
+              - column: { name: password_hash, value: "$2a$12$I3BAmtbjDE3tthp.dlnwXOZ.JSZfLYnOTvdgD0jGMFQlZO9MjL53G" }
               - column: { name: status, value: "ACTIVE" }
               - column: { name: role, value: "ADMIN" }

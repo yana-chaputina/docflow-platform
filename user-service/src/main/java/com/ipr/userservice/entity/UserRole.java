@@ -1,6 +1,6 @@
 package com.ipr.userservice.entity;
 
-public enum Role {
+public enum UserRole {
     USER,
     MANAGER,
     ADMIN
