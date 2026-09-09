@@ -1,4 +1,4 @@
-package com.ipr.userservice.dto;
+package com.ipr.userservice.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

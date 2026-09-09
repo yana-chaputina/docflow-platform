@@ -1,4 +1,4 @@
-package com.ipr.userservice.security;
+package com.ipr.userservice.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Encoders;

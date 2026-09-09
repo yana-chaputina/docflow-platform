@@ -32,7 +32,4 @@ public class RefreshToken {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private Boolean revoked;
-
 }

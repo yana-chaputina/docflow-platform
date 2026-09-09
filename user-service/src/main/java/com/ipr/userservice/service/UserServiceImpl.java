@@ -1,8 +1,8 @@
 package com.ipr.userservice.service;
 
-import com.ipr.userservice.dto.CreateUserRequestDto;
-import com.ipr.userservice.dto.UpdateUserRequestDto;
-import com.ipr.userservice.dto.UserResponseDto;
+import com.ipr.userservice.dto.user.CreateUserRequestDto;
+import com.ipr.userservice.dto.user.UpdateUserRequestDto;
+import com.ipr.userservice.dto.user.UserResponseDto;
 import com.ipr.userservice.entity.UserRole;
 import com.ipr.userservice.entity.User;
 import com.ipr.userservice.entity.UserStatus;
@@ -66,4 +66,12 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    @Override
+    public List<UserResponseDto> getUsersWithRoleManager() {
+        return userDTOEntityMapper
+                .userToUserResponseDtoAsList(userRepository
+                        .findByRole(UserRole.MANAGER));
+    }
+
 }
