@@ -3,10 +3,8 @@ package com.ipr.userservice.controller;
 import com.ipr.userservice.dto.auth.AuthResponse;
 import com.ipr.userservice.dto.auth.LoginRequest;
 import com.ipr.userservice.service.AuthService;
-import com.ipr.userservice.security.CustomUserDetails;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -45,11 +43,4 @@ public class AuthController {
         return ResponseEntity.ok("Logged out successfully.");
     }
 
-    @GetMapping("/me")
-    public ResponseEntity<?> me(Authentication authentication) {
-        CustomUserDetails userDetails =
-                (CustomUserDetails) authentication.getPrincipal();
-
-        return ResponseEntity.ok(userDetails);
-    }
 }

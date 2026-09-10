@@ -3,6 +3,7 @@ package com.ipr.userservice.controller;
 import com.ipr.userservice.dto.user.CreateUserRequestDto;
 import com.ipr.userservice.dto.user.UpdateUserRequestDto;
 import com.ipr.userservice.dto.user.UserResponseDto;
+import com.ipr.userservice.security.CustomUserDetails;
 import com.ipr.userservice.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -10,13 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
@@ -74,5 +76,11 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> me(Authentication authentication) {
+        CustomUserDetails userDetails =
+                (CustomUserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(userService.getUserById(userDetails.getUserId()));
+    }
 
 }

@@ -1,6 +1,5 @@
-package com.ipr.userservice.security;
+package com.ipr.notificationservice.security;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
