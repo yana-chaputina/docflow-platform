@@ -1,4 +1,4 @@
-package com.ipr.userservice.dto;
+package com.ipr.userservice.dto.user;
 
 import lombok.Builder;
 

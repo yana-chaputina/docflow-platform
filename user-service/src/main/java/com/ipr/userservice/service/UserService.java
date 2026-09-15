@@ -1,20 +1,22 @@
 package com.ipr.userservice.service;
 
-import com.ipr.userservice.dto.CreateUserRequestDto;
-import com.ipr.userservice.dto.UpdateUserRequestDto;
-import com.ipr.userservice.dto.UserResponseDto;
+import com.ipr.userservice.dto.user.CreateUserRequestDto;
+import com.ipr.userservice.dto.user.UpdateUserRequestDto;
+import com.ipr.userservice.dto.user.UserResponseDto;
 
 import java.util.List;
 
 public interface UserService {
 
-    public List<UserResponseDto> getUsers();
+    List<UserResponseDto> getUsers();
 
-    public UserResponseDto getUserById(Long id);
+    UserResponseDto getUserById(Long id);
 
-    public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto);
+    UserResponseDto createUser(CreateUserRequestDto createUserRequestDto);
 
-    public UserResponseDto updateUser(UpdateUserRequestDto updateUserRequestDto, Long id);
+    UserResponseDto updateUser(UpdateUserRequestDto updateUserRequestDto, Long id);
 
-    public void deleteUser(Long id);
+    void deleteUser(Long id);
+
+    List<UserResponseDto> getUsersWithRoleManager();
 }

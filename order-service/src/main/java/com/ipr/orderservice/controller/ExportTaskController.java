@@ -2,11 +2,13 @@ package com.ipr.orderservice.controller;
 
 import com.ipr.orderservice.dto.ExportFile;
 import com.ipr.orderservice.dto.ExportTaskDto;
+import com.ipr.orderservice.security.JwtPrincipal;
 import com.ipr.orderservice.service.ExportTaskService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,18 +23,21 @@ public class ExportTaskController {
         this.exportTaskService = exportTaskService;
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<ExportTaskDto> createExportTask(@PathVariable Long id){
+    @PostMapping()
+    public ResponseEntity<ExportTaskDto> createExportTask(@AuthenticationPrincipal JwtPrincipal principal){
+        Long id = getUserIdFromPrincipal(principal);
         return ResponseEntity.ok(exportTaskService.createExportTask(id));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ExportTaskDto> getExportTaskById(@PathVariable Long id){
+    @GetMapping()
+    public ResponseEntity<ExportTaskDto> getExportTaskById(@AuthenticationPrincipal JwtPrincipal principal){
+        Long id = getUserIdFromPrincipal(principal);
         return ResponseEntity.ok(exportTaskService.getExportTaskById(id));
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<ExportTaskDto>> getExportTaskByUserId(@PathVariable Long id){
+    @GetMapping("/user")
+    public ResponseEntity<List<ExportTaskDto>> getExportTaskByUserId(@AuthenticationPrincipal JwtPrincipal principal){
+        Long id = getUserIdFromPrincipal(principal);
         return ResponseEntity.ok(exportTaskService.getExportTasksByUserId(id));
     }
 
@@ -47,5 +52,9 @@ public class ExportTaskController {
                 )
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(exportFile.resource());
+    }
+
+    private Long getUserIdFromPrincipal(JwtPrincipal principal){
+        return principal.getUserId();
     }
 }

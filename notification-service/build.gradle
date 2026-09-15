@@ -1,7 +1,6 @@
 description = 'notification-service'
 
 dependencies {
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 

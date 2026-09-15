@@ -35,12 +35,6 @@ databaseChangeLog:
                   defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
-              - column:
-                  name: revoked
-                  type: BOOLEAN
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
 
         - addForeignKeyConstraint:
             constraintName: fk_refresh_tokens_user_id

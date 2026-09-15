@@ -1,7 +1,8 @@
-package com.ipr.userservice.config;
+package com.ipr.orderservice.config;
 
-import com.ipr.userservice.security.AuthEntryPointJwt;
-import com.ipr.userservice.security.AuthTokenFilter;
+
+import com.ipr.orderservice.security.AuthEntryPointJwt;
+import com.ipr.orderservice.security.AuthTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +38,6 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement((session)

@@ -1,8 +1,8 @@
 package com.ipr.userservice.mapper;
 
-import com.ipr.userservice.dto.CreateUserRequestDto;
-import com.ipr.userservice.dto.UpdateUserRequestDto;
-import com.ipr.userservice.dto.UserResponseDto;
+import com.ipr.userservice.dto.user.CreateUserRequestDto;
+import com.ipr.userservice.dto.user.UpdateUserRequestDto;
+import com.ipr.userservice.dto.user.UserResponseDto;
 import com.ipr.userservice.entity.User;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;

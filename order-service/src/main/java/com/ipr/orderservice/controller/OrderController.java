@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrder(orderDto));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<OrderDto> deleteOrder(@PathVariable Long id){
         orderService.deleteOrder(id);
