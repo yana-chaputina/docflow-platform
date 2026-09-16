@@ -2,6 +2,7 @@ package com.ipr.orderservice.service;
 
 import com.ipr.orderservice.dto.OrderDto;
 import com.ipr.orderservice.entity.Order;
+import com.ipr.orderservice.event.OrderEvent;
 import com.ipr.orderservice.kafka.KafkaProducer;
 import com.ipr.orderservice.mapper.OrderDtoEntityMapper;
 import com.ipr.orderservice.repository.OrderRepository;
@@ -43,7 +44,9 @@ public class OrderServiceImpl implements OrderService {
         if(orderValidityChecker.validateOrder(orderDto)) {
             Order order = orderDTOEntityMapper.orderDtoToOrder(orderDto);
             orderRepository.save(order);
-            kafkaProducer.sendMessage(order.getId().toString(),"order was created");
+            OrderEvent orderEvent = new OrderEvent(order.getUserId(),
+                    "Order with id " + order.getId() + " has been created");
+            kafkaProducer.sendMessage(String.valueOf(order.getUserId()),orderEvent);
             return orderDTOEntityMapper.orderToOrderDto(order);
         } else {
             throw new RuntimeException("Order validation failed");

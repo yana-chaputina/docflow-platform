@@ -1,5 +1,6 @@
 package com.ipr.notificationservice.kafka;
 
+import com.ipr.notificationservice.event.OrderEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,8 @@ public class KafkaConsumer {
     private String groupId;
 
     @KafkaListener(topics = "${spring.kafka.topic.name}", groupId = "${spring.kafka.consumer.group-id}")
-    public void consume(String message){
-        logger.info("Kafka consumer belongs to the group {} has received message : {} to the topic : {}", groupId, message, topicName);
+    public void consume(OrderEvent orderEvent){
+        logger.info("Kafka consumer belongs to the group {} has received message : {} to the topic : {}",
+                groupId,orderEvent.message(), topicName);
     }
 }
