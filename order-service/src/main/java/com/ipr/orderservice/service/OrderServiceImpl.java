@@ -44,8 +44,8 @@ public class OrderServiceImpl implements OrderService {
         if(orderValidityChecker.validateOrder(orderDto)) {
             Order order = orderDTOEntityMapper.orderDtoToOrder(orderDto);
             orderRepository.save(order);
-            OrderEvent orderEvent = new OrderEvent(order.getUserId(),
-                    "Order with id " + order.getId() + " has been created");
+            OrderEvent orderEvent = new OrderEvent(order.getId(),order.getUserId(),
+                    "Order has been created");
             kafkaProducer.sendMessage(String.valueOf(order.getUserId()),orderEvent);
             return orderDTOEntityMapper.orderToOrderDto(order);
         } else {

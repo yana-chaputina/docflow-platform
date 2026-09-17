@@ -1,9 +1,7 @@
 package com.ipr.notificationservice.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,6 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Notification {
 
     @Id
@@ -21,6 +21,9 @@ public class Notification {
 
     @Column(nullable = false)
     private Long userId;
+
+    @Column(nullable = false)
+    private Long orderId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
@@ -33,7 +36,7 @@ public class Notification {
     @Column(nullable = false, length = 20)
     private NotificationStatus status;
 
-    @Column(nullable = false)
+    @Column
     private Long retryCount;
 
     private String errorMessage;

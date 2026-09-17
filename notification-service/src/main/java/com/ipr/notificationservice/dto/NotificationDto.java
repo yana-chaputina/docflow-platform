@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 public record NotificationDto (
         Long id,
         Long userId,
-        NotificationType notificationType,
-        String description,
-        NotificationStatus notificationStatus,
+        Long orderId,
+        NotificationType type,
+        String content,
+        NotificationStatus status,
         Long retryCount,
         String errorMessage,
         LocalDateTime createdAt,

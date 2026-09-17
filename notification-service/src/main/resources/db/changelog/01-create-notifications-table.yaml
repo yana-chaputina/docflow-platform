@@ -24,6 +24,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
                   name: type
                   type: VARCHAR(20)
                   constraints:
@@ -43,8 +48,6 @@ databaseChangeLog:
                   name: retry_count
                   type: BIGINT
                   defaultValue: 0
-                  constraints:
-                    nullable: false
               - column:
                   name: error_message
                   type: VARCHAR(255)
